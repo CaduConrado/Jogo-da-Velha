@@ -260,6 +260,6 @@ function removeClick() {
 
 function addClick() {
   for (let i = 0; i < boxes.length; i++) {
-    boxes[i].addEventListener("click", boxClick[i]); // Adiciona novamente a função de clique armazenada
+    boxes[i].addEventListener("click", boxClick[i]); // Adiciona função click novamente
   }
 }
