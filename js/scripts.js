@@ -10,6 +10,9 @@ let secondPlayer;
 let player1 = 0;
 let player2 = 0;
 
+//noCheckVelha
+let noVelha = true;
+
 //array para armazenar a função de clique
 let boxClick = [];
 //add o evento de click aos boxes
@@ -20,6 +23,25 @@ for (let i = 0; i < boxes.length; i++) {
       clicou(this);
     })
   );
+}
+
+choosePlayer();
+
+function choosePlayer() {
+  //evento para saber o tipo de player
+  for (let i = 0; i < buttons.length; i++) {
+    buttons[i].addEventListener("click", function () {
+      secondPlayer = this.getAttribute("id");
+      for (let j = 0; j < buttons.length; j++) {
+        buttons[j].style.display = "none";
+      }
+
+      setTimeout(function () {
+        let container = document.querySelector("#container");
+        container.classList.remove("hide");
+      }, 500);
+    });
+  }
 }
 
 function checkElement(player1, player2) {
@@ -57,8 +79,10 @@ function checkWinCondiction() {
 
     if (b1Child == "x" && b2Child == "x" && b3Child == "x") {
       declareWinner("x");
+      noVelha = false;
     } else if (b1Child == "o" && b2Child == "o" && b3Child == "o") {
       declareWinner("o");
+      noVelha = false;
     }
   }
 
@@ -73,8 +97,10 @@ function checkWinCondiction() {
 
     if (b4Child == "x" && b5Child == "x" && b6Child == "x") {
       declareWinner("x");
+      noVelha = false;
     } else if (b4Child == "o" && b5Child == "o" && b6Child == "o") {
       declareWinner("o");
+      noVelha = false;
     }
   }
 
@@ -89,8 +115,10 @@ function checkWinCondiction() {
 
     if (b7Child == "x" && b8Child == "x" && b9Child == "x") {
       declareWinner("x");
+      noVelha = false;
     } else if (b7Child == "o" && b8Child == "o" && b9Child == "o") {
       declareWinner("o");
+      noVelha = false;
     }
   }
 
@@ -106,8 +134,10 @@ function checkWinCondiction() {
 
     if (b1Child == "x" && b4Child == "x" && b7Child == "x") {
       declareWinner("x");
+      noVelha = false;
     } else if (b1Child == "o" && b4Child == "o" && b7Child == "o") {
       declareWinner("o");
+      noVelha = false;
     }
   }
 
@@ -122,8 +152,10 @@ function checkWinCondiction() {
 
     if (b2Child == "x" && b5Child == "x" && b8Child == "x") {
       declareWinner("x");
+      noVelha = false;
     } else if (b2Child == "o" && b5Child == "o" && b8Child == "o") {
       declareWinner("o");
+      noVelha = false;
     }
   }
   if (
@@ -137,8 +169,10 @@ function checkWinCondiction() {
 
     if (b3Child == "x" && b6Child == "x" && b9Child == "x") {
       declareWinner("x");
+      noVelha = false;
     } else if (b3Child == "o" && b6Child == "o" && b9Child == "o") {
       declareWinner("o");
+      noVelha = false;
     }
   }
 
@@ -154,8 +188,10 @@ function checkWinCondiction() {
 
     if (b1Child == "x" && b5Child == "x" && b9Child == "x") {
       declareWinner("x");
+      noVelha = false;
     } else if (b1Child == "o" && b5Child == "o" && b9Child == "o") {
       declareWinner("o");
+      noVelha = false;
     }
   }
 
@@ -170,21 +206,16 @@ function checkWinCondiction() {
 
     if (b3Child == "x" && b5Child == "x" && b7Child == "x") {
       declareWinner("x");
+      noVelha = false;
     } else if (b3Child == "o" && b5Child == "o" && b7Child == "o") {
       declareWinner("o");
+      noVelha = false;
     }
   }
 
   let counter = 0;
   //Verificando se deu velha
-  for (let i = 0; i < boxes.length; i++) {
-    if (boxes[i].childNodes[0] != undefined) {
-      counter++;
-    }
-  }
-  if (counter == 9) {
-    declareWinner("Deu velha!");
-  }
+  checkVelha(noVelha);
 }
 
 function declareWinner(winner) {
@@ -245,6 +276,12 @@ function clicou(boxes) {
 
     if (player1 == player2) {
       player1++;
+
+      if (secondPlayer == "ai-player") {
+        //executa a jogada
+        computerPlay();
+        player2++;
+      }
     } else {
       player2++;
     }
@@ -261,5 +298,34 @@ function removeClick() {
 function addClick() {
   for (let i = 0; i < boxes.length; i++) {
     boxes[i].addEventListener("click", boxClick[i]); // Adiciona função click novamente
+  }
+}
+
+function checkVelha(check) {
+  for (let i = 0; i < boxes.length; i++) {
+    if (boxes[i].childNodes[0] != undefined) {
+      counter++;
+    }
+  }
+  if (counter == 9 && check) {
+    declareWinner("Deu velha!");
+  }
+}
+
+function computerPlay() {
+  let cloneO = o.cloneNode(true);
+  let emptyBoxes = [];
+
+  // Procurar todas as boxes vazias
+  for (let i = 0; i < boxes.length; i++) {
+    if (boxes[i].childNodes.length == 0) {
+      emptyBoxes.push(boxes[i]);
+    }
+  }
+
+  // Se houver boxes vazias, escolha uma aleatoriamente
+  if (emptyBoxes.length > 0) {
+    let randomIndex = Math.floor(Math.random() * emptyBoxes.length);
+    emptyBoxes[randomIndex].appendChild(cloneO);
   }
 }
