@@ -12,7 +12,7 @@ Este é um projeto simples de Jogo da Velha (Tic-Tac-Toe) desenvolvido em HTML, 
 
 ## Demonstração
 
-*Insira um GIF ou imagem do projeto em funcionamento aqui (opcional).*
+
 
 ## Tecnologias Utilizadas
 
