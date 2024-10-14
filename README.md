@@ -36,7 +36,7 @@ Para executar o projeto, você precisará de:
 1. Clone o repositório ou baixe o projeto:
 
     ```bash
-    git clone https://github.com/seu-usuario/jogo-da-velha-ia.git
+    git clone https://github.com/CaduConrado/Jogo-da-Velha
     ```
 
     Ou faça o download do arquivo ZIP e extraia-o no diretório desejado.
